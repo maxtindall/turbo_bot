@@ -12,7 +12,7 @@ except ImportError:
 
 # --- API CONFIG ---
 
-BASE_URL = "https://trading-api.kalshi.com/trade-api/v2"
+BASE_URL = "https://api.elections.kalshi.com/trade-api/v2"
 
 # API key loaded from environment variable (set in .env or shell)
 # Never hardcode this value here

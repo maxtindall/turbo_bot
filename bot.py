@@ -8,26 +8,26 @@ from execution.positions import get_position, update
 
 
 def run():
-    print("🚀 BOT START")
-    print("➡️ Fetching markets...")
+    print("BOT START")
+    print("Fetching markets...")
 
     markets = get_phl_markets()
 
-    print("➡️ Returned from market fetch")
+    print("Returned from market fetch")
 
     if not markets:
-        print("❌ No markets found — exiting")
-        print("✅ BOT END")
+        print("No markets found -- exiting")
+        print("BOT END")
         return
 
-    print(f"\n📊 USING {len(markets)} MARKETS")
+    print(f"\nUSING {len(markets)} MARKETS")
 
     try:
         temp, high, hour = get_weather()
-        print("🌤 Weather:", temp, high, hour)
+        print("Weather:", temp, high, hour)
     except Exception as e:
-        print("❌ WEATHER FETCH FAILED:", e)
-        print("✅ BOT END")
+        print("WEATHER FETCH FAILED:", e)
+        print("BOT END")
         return
 
     for m in markets:
@@ -39,7 +39,7 @@ def run():
         print("Threshold:", threshold)
 
         if not threshold:
-            print("❌ No threshold, skipping")
+            print("No threshold found, skipping")
             continue
 
         try:
@@ -50,11 +50,11 @@ def run():
             print("Bid/Ask:", bid, ask)
 
         except Exception as e:
-            print("❌ ORDERBOOK ERROR:", e)
+            print("ORDERBOOK ERROR:", e)
             continue
 
         if bid is None:
-            print("❌ No bid, skipping")
+            print("  No tradeable market, skipping")
             continue
 
         try:
@@ -67,30 +67,30 @@ def run():
                 "| Edge:", round(edge, 3)
             )
         except Exception as e:
-            print("❌ MODEL ERROR:", e)
+            print("MODEL ERROR:", e)
             continue
 
         try:
             pos = get_position(mid)
             print("Position:", pos)
         except Exception as e:
-            print("❌ POSITION ERROR:", e)
+            print("POSITION ERROR:", e)
             pos = None
 
         if edge > 0.05 and pos != "YES":
-            print("🔥 TRADE YES")
+            print("TRADE YES")
             place(mid, "YES", bid)
             update(mid, "YES")
 
         elif edge < -0.05 and pos != "NO":
-            print("🔥 TRADE NO")
+            print("TRADE NO")
             place(mid, "NO", ask if ask else (1 - bid))
             update(mid, "NO")
 
         else:
             print("No trade")
 
-    print("\n✅ BOT END")
+    print("\nBOT END")
 
 
 if __name__ == "__main__":

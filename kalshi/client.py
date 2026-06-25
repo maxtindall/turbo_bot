@@ -17,22 +17,22 @@ def _request(params):
             timeout=10
         )
 
-        print(f"\n🌐 STATUS: {res.status_code}")
-        print(f"📦 SIZE: {len(res.text)} bytes")
+        print(f"STATUS: {res.status_code}")
+        print(f"SIZE: {len(res.text)} bytes")
 
         if res.status_code != 200:
-            print("❌ RESPONSE PREVIEW:", res.text[:500])
+            print("RESPONSE PREVIEW:", res.text[:500])
             return {}
 
         try:
             return res.json()
         except Exception as e:
-            print("❌ JSON DECODE FAILED:", e)
-            print("❌ RAW RESPONSE PREVIEW:", res.text[:500])
+            print("JSON DECODE FAILED:", e)
+            print("RAW RESPONSE PREVIEW:", res.text[:500])
             return {}
 
     except Exception as e:
-        print("❌ REQUEST FAILED:", e)
+        print("REQUEST FAILED:", e)
         return {}
 
 
@@ -55,7 +55,7 @@ def fetch_markets(limit=100, max_pages=5):
             break
 
         markets = data.get("markets") or data.get("data", {}).get("markets", [])
-        print(f"📊 PAGE {page}: {len(markets)} markets")
+        print(f"PAGE {page}: {len(markets)} markets")
 
         if not markets:
             break
@@ -68,7 +68,7 @@ def fetch_markets(limit=100, max_pages=5):
 
         page += 1
 
-    print(f"\n✅ TOTAL COLLECTED: {len(all_markets)}")
+    print(f"TOTAL COLLECTED: {len(all_markets)}")
     return all_markets
 
 
